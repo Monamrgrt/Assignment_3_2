@@ -1,0 +1,26 @@
+---
+title: "make_art_Klau"
+author: "Mona Klau"
+date: "2023-01-27"
+output: html_document
+---
+#Q3.3.2
+#make_art() function that allows users to produce random art with set.seed argument. 
+```{r}
+make_art <- function(seed) {
+  set.seed(seed)
+  x <- seq(from = -3*pi, to = 3*pi, length.out = 5000)
+  y1 <- sin(x*runif(1,1,4)) + rnorm(5000, mean = 0, sd = runif(1,0.1,1))
+  y2 <- cos(x*runif(1,1,4)) + rnorm(5000, mean = 0, sd = runif(1,0.1,1))
+  data <- data.frame(x = x, y = y1, y2 = y2,
+                      color = colorRampPalette(brewer.pal(8, "Dark2"))(5000))
+  ggplot(data) +
+    geom_path(aes(x, y, color = color, group = cut_number(x, runif(1,20,100)))) +
+    geom_path(aes(x, y2, color = color, group = cut_number(x, runif(1,20,100)))) +
+    scale_color_identity() +
+    theme_void() +
+    theme(legend.position = "none")
+  }
+make_art(10)
+```
+
